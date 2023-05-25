@@ -1,5 +1,8 @@
+/**
+ * @format
+ */
+
 import React from 'react';
-import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -10,20 +13,21 @@ import {
   View,
 } from 'react-native';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+const App = () => {
   return (
-
     <View>
-      <Text>HELLOOOOOOOOOOOO</Text>
-
-
+      <Text style={styles.text}>HELLOOOOOOOOOOOO</Text>  
     </View>
   );
+  
 }
 
 const styles = StyleSheet.create({
- 
+  text : {
+    color : 'black',
+    fontSize : 30,
+  },
+
 });
 
 export default App;
