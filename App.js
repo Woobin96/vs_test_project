@@ -7,45 +7,34 @@ import {
   SectionList,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 // 코드 자동 정렬 : Shift + Alt + F
 const App = () => {
 
-  const DATA = [
-    {
-      title: 'Title 1',
-      data: ['Item 1-1', 'Item 1-2'],
-    },
-  ]
 
-  const [Ref, setRef] = useState(false);
-
-  const onRefresh = () => {
-    setRef(true);
-    // "..." 배열끝에 붙히기 세개의 점
-    setItems([...Items, { name: 'Items 123' }]);
-    setRef(false);
-  }
+  const [Name, setName] = useState('??');
 
 
   // jsx 는 view 안에 js 를 사용 가능 map() 안에 함수 아무거나 써도댐
   // ScrollView 사용 할 떄 View 자체를 빼도 댐
   return (
-    <SectionList
-      keyExtractor={(item, index) => index.toString}
-      sections={DATA}
-      renderItem={({ item }) => (
-        <Text style={styles.text}>{item}</Text>
-      )}
+    <View style={styles.body}>
+      <Text style={styles.text}>your name ?</Text>
+      <TextInput
+        // keyboardType='' // 키보드 타입 정하는거
+        // maxLength={3} // input max 입력개수
+        // editable={false} // 활성 / 비활성
+        secureTextEntry // 비밀번호
+        style={styles.text_input}
+        placeholder='nameing'
+        onChangeText={(value) => setName(value)}
+      />
+      <Text style={styles.text}>your name is ...</Text>
+      <Text style={styles.text}>{Name}</Text>
+    </View>
 
-      renderSectionHeader={({ section }) => (
-        <View style={styles.item}>
-          <Text style={styles.text}>{section.title}</Text>
-        </View>
-      )}
-
-    />
   )
 
 }
@@ -54,22 +43,23 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     flexDirection: 'column',
-    // alignItems: 'center', // 가로
+    alignItems: 'center', // 가로
     // justifyContent: "flex-start", // 세로
-  },
-  item: {
-    margin: 12,
-    backgroundColor: '#86E57F',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   text: {
     color: '#000000',
-    fontSize: 45,
+    fontSize: 26,
     fontStyle: 'italic',
     fontWeight: 'bold',
     margin: 10,
-    textTransform: 'uppercase',
+    // textTransform: 'uppercase',
+  },
+  text_input: {
+    borderWidth: 2,
+    borderColor: '#777',
+    width: '80%',
+    textAlign: 'center',
+    fontSize: 15,
   },
 });
 
