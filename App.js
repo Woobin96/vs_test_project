@@ -12,19 +12,28 @@ import {
 // 코드 자동 정렬 : Shift + Alt + F
 const App = () => {
 
-  const DATA = [
+  const [Sections, setSections] = useState([
     {
       title: 'Title 1',
       data: ['Item 1-1', 'Item 1-2'],
     },
-  ]
+  ]);
 
   const [Ref, setRef] = useState(false);
 
   const onRefresh = () => {
     setRef(true);
+    const adding_index = Sections.length + 1;
     // "..." 배열끝에 붙히기 세개의 점
-    setItems([...Items, { name: 'Items 123' }]);
+    setSections([...Sections,
+    {
+      title: 'Title ' + adding_index,
+      data: [
+        'Item ' + adding_index + '-1',
+        'Item ' + adding_index + '-2',
+      ]
+    }
+    ]);
     setRef(false);
   }
 
@@ -33,17 +42,26 @@ const App = () => {
   // ScrollView 사용 할 떄 View 자체를 빼도 댐
   return (
     <SectionList
-      keyExtractor={(item, index) => index.toString}
-      sections={DATA}
+      keyExtractor={(item, index) => index.toString()}
+      sections={Sections}
       renderItem={({ item }) => (
-        <Text style={styles.text}>{item}</Text>
+        <View style={styles.item}>
+          <Text style={styles.text}>{item}</Text>
+        </View>
       )}
 
       renderSectionHeader={({ section }) => (
-        <View style={styles.item}>
+        <View style={styles.header}>
           <Text style={styles.text}>{section.title}</Text>
         </View>
       )}
+      refreshControl={
+        <RefreshControl
+          refreshing={Ref}
+          onRefresh={onRefresh}
+        
+        />
+      }
 
     />
   )
@@ -70,6 +88,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     margin: 10,
     textTransform: 'uppercase',
+  },
+  header: {
+    backgroundColor: '#4ae1fa',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
   },
 });
 
