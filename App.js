@@ -1,5 +1,6 @@
 import React, { Component, useState } from 'react';
 import {
+  Alert,
   Button,
   FlatList,
   Pressable,
@@ -9,6 +10,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableHighlight,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -21,7 +23,21 @@ const App = () => {
   const [Name, setName] = useState('??');
   const [Sumit, setSumit] = useState(false);
   const onPressHander = () => {
-    setSumit(!Sumit);
+    if (Name.length > 3) {
+      setSumit(!Sumit);
+    }
+    else {
+      // Alert.alert('Error', '3자 이상 입력해주세요', [
+      //   // {text: 'OK', onPress:()=>console.warn('okokoko')} // onPress:()=>console.warn (android = 토스트 같은거임)
+      //   { text: '다시 표시 안함' },
+      //   { text: 'Cancel' },
+      //   { text: 'OK' },
+      // ],
+      //   { cancelable: true, onDismiss: () => console.warn('qweqwe') } // 다이얼로그 아니여도 다른곳 터치시 닫게 하는거 onDismiss: () => console.warn = (android = 토스트 같은거임)
+      // );
+
+      ToastAndroid.show('error', ToastAndroid.SHORT) // android 에서만 사용가능한 토스트임 (react native 전용)
+    }
   }
 
 
@@ -34,7 +50,7 @@ const App = () => {
         // keyboardType='' // 키보드 타입 정하는거
         // maxLength={3} // input max 입력개수
         // editable={false} // 활성 / 비활성
-        secureTextEntry // 비밀번호
+        // secureTextEntry // 비밀번호
         style={styles.text_input}
         placeholder='nameing'
         onChangeText={(value) => setName(value)}
@@ -94,7 +110,7 @@ const App = () => {
       <Pressable
         onPress={onPressHander}
         hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }} // 버튼 주변까지 클릭이 가능한거
-        android_ripple ={{color:'#00f'}} // 클릭시 물결 같은 효과
+        android_ripple={{ color: '#00f' }} // 클릭시 물결 같은 효과 
         style={({ pressed }) => [
           { backgroundColor: pressed ? '#078196' : '#61DBF0' },
           styles.btn
