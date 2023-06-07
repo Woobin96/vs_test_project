@@ -15,7 +15,9 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Image,
   View,
+  ImageBackground,
 } from 'react-native';
 // 코드 자동 정렬 : Shift + Alt + F
 const App = () => {
@@ -37,7 +39,10 @@ const App = () => {
   // jsx 는 view 안에 js 를 사용 가능 map() 안에 함수 아무거나 써도댐
   // ScrollView 사용 할 떄 View 자체를 빼도 댐
   return (
-    <View style={styles.body}>
+    <ImageBackground
+      style={styles.body}
+      source={require('./assets/back.png')}
+    >
       <Modal
         visible={errorMsg}
         onRequestClose={() => setErrorMsg(false)}
@@ -55,13 +60,13 @@ const App = () => {
             </View>
             <Pressable
               onPress={() => setErrorMsg(false)}
-              android_ripple={{color:'#999'}}
+              android_ripple={{ color: '#999' }}
             >
-            <Text style={styles.text}>OK</Text>
-          </Pressable>
+              <Text style={styles.text}>OK</Text>
+            </Pressable>
 
+          </View>
         </View>
-    </View>
       </Modal >
       <Text style={styles.text}>your name ?</Text>
       <TextInput
@@ -73,18 +78,18 @@ const App = () => {
         placeholder='nameing'
         onChangeText={(value) => setName(value)}
       />
-{/* 흥히 사용하는 버튼 컬러변경 ok 눌렀을때 변경 안되서 다른 버튼을 사용할거 같음  */ }
-{/* <Button
+      {/* 흥히 사용하는 버튼 컬러변경 ok 눌렀을때 변경 안되서 다른 버튼을 사용할거 같음  */}
+      {/* <Button
         title={Sumit ? 'clear' : 'Enter'}
         onPress={onPressHander}
         // disabled={Sumit} // 활성화 비활성화 처리
         color='#00ff12'
       /> */}
 
-{/* TouchableOpacity는 클릭시 불투명도를 줄이는 클릭 가능한 뷰 
+      {/* TouchableOpacity는 클릭시 불투명도를 줄이는 클릭 가능한 뷰 
           activeOpacity 의해 결정 기본 0.2
       */}
-{/* <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={onPressHander}
         style={styles.btn}
         activeOpacity = {0.6}
@@ -92,11 +97,11 @@ const App = () => {
         <Text style={styles.text}>{Sumit ? 'Clear' : 'Sumit'}</Text>
       </TouchableOpacity> */}
 
-{/* 
+      {/* 
         클릭시 검정색으로 됨
         underlayColor 로 클릭시 색 변경 가능
       */}
-{/* <TouchableHighlight
+      {/* <TouchableHighlight
         onPress={onPressHander}
         style={styles.btn}
         activeOpacity = {0.5}
@@ -105,12 +110,12 @@ const App = () => {
         <Text style={styles.text}>{Sumit ? 'Clear' : 'Sumit'}</Text>
       </TouchableHighlight> */}
 
-{/* 
+      {/* 
         스타일 허용 X
         내부의 보기를 사용하여 스타일 지정 가능 ex) view 만들어서 하는것
         깔끔하고 깨끗한 버튼 쓸 때 괜찮을거 같긴 함
       */}
-{/* <TouchableWithoutFeedback
+      {/* <TouchableWithoutFeedback
         onPress={onPressHander}
         style={styles.btn}
         activeOpacity = {0.5}
@@ -119,26 +124,46 @@ const App = () => {
         <Text style={styles.text}>{Sumit ? 'Clear' : 'Sumit'}</Text>
       </TouchableWithoutFeedback> */}
 
-{/* 
+      {/* 
         Pressable 새로나온거라고 함 
         pressed 클릭한 상태를 알수있는것이라고 함
         https://reactnative.dev/docs/pressable#example
         onLongPress - 롱클릭
       */}
-<Pressable
-  onPress={onPressHander}
-  hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }} // 버튼 주변까지 클릭이 가능한거
-  android_ripple={{ color: '#00f' }} // 클릭시 물결 같은 효과 
-  style={({ pressed }) => [
-    { backgroundColor: pressed ? '#078196' : '#61DBF0' },
-    styles.btn
-  ]}
->
-  <Text style={styles.text}>{Sumit ? 'Clear' : 'Sumit'}</Text>
-</Pressable>
-{ Sumit ? <Text style={styles.text}>your name is ... {Name}</Text> : null }
+      <Pressable
+        onPress={onPressHander}
+        hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }} // 버튼 주변까지 클릭이 가능한거
+        android_ripple={{ color: '#00f' }} // 클릭시 물결 같은 효과 
+        style={({ pressed }) => [
+          { backgroundColor: pressed ? '#078196' : '#61DBF0' },
+          styles.btn
+        ]}
+      >
+        <Text style={styles.text}>{Sumit ? 'Clear' : 'Sumit'}</Text>
+      </Pressable>
+      {
+        Sumit ?
+          <View style={styles.body}>
+            <Text style={styles.text}>your name is ... {Name}</Text>
+            <Image
+              source={require('./assets/done.png')}
+              style={styles.img}
+              resizeMode='stretch' // 이미지가 잘렸을때 하면 딱맞게 수정
+            />
+          </View>
 
-    </View >
+          :
+          // 점과 슬래시는 현재폴더에서 경로들 제공
+          <Image
+            source={require('./assets/error.png')}
+            // source={{uri:'https://previews.123rf.com/images/jojoo64/jojoo641512/jojoo64151200496/49798962-%ED%95%9C%EA%B5%AD-%EA%B5%90%ED%86%B5-%EC%95%88%EC%A0%84-%ED%95%9C%EA%B5%AD%EA%B3%BC-%EC%84%9C%EC%96%91-%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EC%9D%98-%EB%8B%A8%EC%96%B4-%EC%9C%84%ED%97%98-%ED%91%9C%EC%A7%80%ED%8C%90%EC%9E%85%EB%8B%88%EB%8B%A4.jpg'}} // uri 로 함
+            style={styles.img}
+            resizeMode='stretch' // 이미지가 잘렸을때 하면 딱맞게 수정
+          // blurRadius={15} // 블러처리 (흐리게)
+          />
+      }
+
+    </ImageBackground >
 
   );
 
@@ -199,6 +224,11 @@ const styles = StyleSheet.create({
     height: 200,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  img: {
+    width: 100,
+    height: 100,
+    marginTop: 16,
   },
 });
 
